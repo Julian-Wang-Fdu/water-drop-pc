@@ -20,7 +20,7 @@ interface IValue{
   password: string;
 }
 
-const Login = () => {
+export default () => {
   const { token } = theme.useToken();
   const [login] = useMutation(LOGIN);
   const loginHandler = async(values:IValue)=>{
@@ -144,5 +144,3 @@ return (
     </ProConfigProvider>
   );
 };
-
-export default Login;
