@@ -6,6 +6,7 @@ mutation login($account: String!,$password:String!){
     password:$password
 ){
     code,
-    message
+    message,
+    data
   }}
 `;
