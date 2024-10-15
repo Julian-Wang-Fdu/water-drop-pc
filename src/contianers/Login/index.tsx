@@ -14,22 +14,43 @@ import logo from '../../assets/logo.svg'
 import Space from 'antd/lib/space';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../graphql/auth';
+import { AUTH_TOKEN } from '../../utils/constants';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTitle } from '../../hooks';
+import { useUserContext } from '../../hooks/userHook';
 
 interface IValue{
   account: string;
   password: string;
+  autoLogin:boolean;
 }
 
 export default () => {
+  useTitle('Login')
   const { token } = theme.useToken();
   const [login] = useMutation(LOGIN);
+  //find origin path 
+  const [params] = useSearchParams()
+  const nav = useNavigate()
+  const {store} = useUserContext()
   const loginHandler = async(values:IValue)=>{
     const res = await login({
       variables: values
     });
     const result = res.data.login
     if(result.code === 200){
+      store.refetchHandler?.()
+      if(values.autoLogin){
+        sessionStorage.setItem(AUTH_TOKEN,'')
+        localStorage.setItem(AUTH_TOKEN,result.data)
+      }else{
+        sessionStorage.setItem(AUTH_TOKEN,result.data)
+        localStorage.setItem(AUTH_TOKEN,'')
+      }
+      
       message.success(result.message)
+      nav(params.get('orgUrl') || '/')
+      return
     }else{
       message.error(result.message)
     }
@@ -53,9 +74,15 @@ return (
         >
           <Tabs
             centered
-          >
-            <Tabs.TabPane key={'account'} tab={'Account Login'} />
-          </Tabs>
+            items = {
+              [
+                {
+                  key: 'account',
+                  label: 'Account Login'
+                }
+              ]
+            }
+          />
               <ProFormText
                 name="account"
                 fieldProps={{
