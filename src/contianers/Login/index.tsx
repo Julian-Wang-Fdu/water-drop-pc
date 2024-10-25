@@ -158,13 +158,6 @@ return (
             >
               auto-login
             </ProFormCheckbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              Forget Password?
-            </a>
           </div>
         </LoginForm>
       </div>
