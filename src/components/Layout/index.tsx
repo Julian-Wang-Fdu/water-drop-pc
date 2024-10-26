@@ -6,8 +6,9 @@ import logo from '../../assets/logo.svg'
 import { AUTH_TOKEN } from '../../utils/constants';
 import { ROUTE_KEY, routes } from '../../routes/menus';
 import { useGoTo } from '../../hooks';
-import { Space } from 'antd';
-import { LogoutOutlined } from '@ant-design/icons';
+import { Space, Tooltip } from 'antd';
+import { LogoutOutlined, ShopOutlined } from '@ant-design/icons';
+import OrgSelect from '../OrgSelect/OrgSelect';
 
 
 const menuItemRender = (
@@ -27,6 +28,9 @@ const Layout  = () => {
         sessionStorage.setItem(AUTH_TOKEN,'')
         localStorage.setItem(AUTH_TOKEN,'')
         nav('/login')
+    }
+    const goToOrg=()=>{
+        go(ROUTE_KEY.ORG)
     }
 
     return (
@@ -52,6 +56,12 @@ const Layout  = () => {
                 path: '/',
                 routes: routes
             }}
+            actionsRender={()=>[
+                <OrgSelect/>,
+                <Tooltip title = "Store manage">
+                    <ShopOutlined onClick={goToOrg}/>
+                </Tooltip>
+            ]}
             menuItemRender = {menuItemRender}
             //click the header will go back to home page
             onMenuHeaderClick={()=>nav('/')}

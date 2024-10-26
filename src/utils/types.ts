@@ -9,6 +9,8 @@ export interface IUser{
     name: string
     desc:string
     avatar:string
+    refetchHandler?:() => void
+    currentOrg?: string
 }
 
 export interface IPage {
@@ -41,7 +43,24 @@ export interface IOrganization {
   businessLicense:string
 }
 
+export interface ICourse {
+  id: string;
+  name: string; // 标题
+  desc?: string;
+  group?: string; // 适龄人群
+  baseAbility?: string;
+  limitNumber: number; // 限制人数
+  duration: number; // 持续时长
+  reserveInfo?: string;
+  refundInfo?: string;
+  otherInfo?: string;
+}
+
 export type TBaseOrganization = Partial<IOrganization>;
+
+export type TBaseCourse = Partial<ICourse>;
+
+export type TCoursesQuery = { [key: string]: { __typename?: 'Query', data: ICourse[], page: IPage } };
 
 export type TOrgsQuery = { [key: string]: { __typename?: 'Query', data: IOrganization[], page: IPage } };
 

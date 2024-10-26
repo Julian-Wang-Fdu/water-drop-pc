@@ -3,37 +3,45 @@ import React, {
 } from 'react';
 import { IPropChild } from './types';
 
-interface IStore{
+interface IStore<T>{
     key: string;
-    store: Record<string,any>;
-    setStore: (payload: Record<string,any>)=>void
+    store: T;
+    setStore: (payload: Partial<T>)=>void
 }
 
 
 
 const cxtCache:Record<string,Cxt> = {}
 
-const getCxtProvider = (
+function getCxtProvider<T>  (
     key:string,
-    defaultValue: Record<string,any>,
-    AppContext: React.Context<IStore>
-) => ({children}:IPropChild)=>{
-    const [store,setStore] = useState(defaultValue)
-    const value = useMemo(()=>({
-        key,store,setStore
-    }),[store])
-    return(<AppContext.Provider value={value}>
-        {children}
-        </AppContext.Provider>
-    );
-}
+    defaultValue: T,
+    AppContext: React.Context<IStore<T>>
+) {
+    return ({children}:IPropChild)=>{
+        const [store,setStore] = useState(defaultValue)
+        const value = useMemo(()=>({
+            key,store,
+            setStore:(payload={})=>setStore((state)=>({
+                ...state,
+                ...payload
+            }))
+        }),[store])
+        return(<AppContext.Provider value={value}>
+            {children}
+            </AppContext.Provider>
+        );
+    }
+    
+} 
 
-class Cxt{
-    defaultStore: IStore;
-    AppContext: React.Context<IStore>;
+
+class Cxt<T=any>{
+    defaultStore: IStore<T>;
+    AppContext: React.Context<IStore<T>>;
     Provider:({children}: IPropChild) => JSX.Element;
 
-    constructor(key: string,defaultValue:Record<string,any>){
+    constructor(key: string,defaultValue:T){
         this.defaultStore ={
             key,
             store: defaultValue,
@@ -45,8 +53,8 @@ class Cxt{
     }
 }
 
-export const useAppContext = (key:string)=>{
-    const cxt = cxtCache[key]
+export function useAppContext <T>(key:string){
+    const cxt = cxtCache[key] as Cxt<T>
     const app = useContext(cxt.AppContext)
     return{
         store: app.store,
@@ -54,16 +62,16 @@ export const useAppContext = (key:string)=>{
     }
 }
 
-export const connectFactory = (
+export function connectFactory<T>  (
     key: string,
-    defaultValue: Record<string,any>
-) =>{
+    defaultValue: T
+) {
     const cxt = cxtCache[key]
-    let CurCxt = null
+    let CurCxt : Cxt<T>
     if(cxt){
         CurCxt = cxt
     }else{
-        CurCxt = new Cxt(key,defaultValue)
+        CurCxt = new Cxt<T>(key,defaultValue)
     }
 
     return (Child:React.FunctionComponent<any>)=>(props:any)=>(
