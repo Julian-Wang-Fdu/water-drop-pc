@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRef, useState } from 'react';
 import EditCourse from './EditCourse';
+import OrderTime from './OrderTime';
 
 /**
 *
@@ -17,6 +18,7 @@ const Course = () => {
     const [curId,setCurId] = useState('')
     const {data,refetch} = useCourses()
     const [showInfo,setShowInfo] = useState(false)
+    const [showOrderTime,setShowOrderTime] = useState(false)
     const onClickAddHandler = (id?:string)=>{
         if(id){
             setCurId(id)
@@ -31,10 +33,15 @@ const Course = () => {
             ref.current?.reload()
         }
     }
+    const onOrderTimeHandler = (id:string)=>{
+        setCurId(id)
+        setShowOrderTime(true)
+    }
     return (
         <PageContainer header={{title: 'Available courses under current store'}}>
             <ProTable<ICourse> columns={getColumns({
-                onEditHandler: onClickAddHandler
+                onEditHandler: onClickAddHandler,
+                onOrderTimeHandler
             }   
             )}
                 rowKey='id'
@@ -65,7 +72,8 @@ const Course = () => {
                     }
                 }}
                 />
-                <EditCourse open={showInfo} id={curId} onClose={closeAndRefetchHandler}/>
+                <EditCourse id={curId} open={showInfo} onClose={closeAndRefetchHandler}/>
+                {showOrderTime&&<OrderTime id={curId} onClose={()=>setShowOrderTime(false)}/>}
         </PageContainer>
     );
 };

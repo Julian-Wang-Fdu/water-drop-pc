@@ -1,3 +1,5 @@
+import { IWeekCourse } from "../contianers/Course/OrderTime/constants";
+
 export interface IPropChild {
   children: React.ReactNode;
 }
@@ -54,6 +56,7 @@ export interface ICourse {
   reserveInfo?: string;
   refundInfo?: string;
   otherInfo?: string;
+  reducibleTime: IWeekCourse[];
 }
 
 export type TBaseOrganization = Partial<IOrganization>;
@@ -61,6 +64,8 @@ export type TBaseOrganization = Partial<IOrganization>;
 export type TBaseCourse = Partial<ICourse>;
 
 export type TCoursesQuery = { [key: string]: { __typename?: 'Query', data: ICourse[], page: IPage } };
+
+export type TCourseQuery = { [key: string]: { __typename?: 'Query', data: ICourse, page: IPage } };
 
 export type TOrgsQuery = { [key: string]: { __typename?: 'Query', data: IOrganization[], page: IPage } };
 

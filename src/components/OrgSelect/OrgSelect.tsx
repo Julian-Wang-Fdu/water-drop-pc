@@ -7,20 +7,13 @@ import { LOCAL_CURRENT_ORG } from '../../utils/constants';
 import { useEffect } from 'react';
 import { useGoTo } from '../../hooks';
 import { ROUTE_KEY } from '../../routes/menus';
+import { currentOrg } from '../../utils';
 
 
 /**
 * Store selector
 */
-const currentOrg = ()=>{
-    try{
-        const res=JSON.parse(localStorage.getItem(LOCAL_CURRENT_ORG) || '')
-        return res
-    }catch{
-        return undefined
-    }
-    
-}
+
 const OrgSelect = ({}) => {
     const {data,refetch} = useOrganizations(1,10,true)
     const {setStore} = useUserContext()

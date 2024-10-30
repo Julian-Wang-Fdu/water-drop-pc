@@ -4,10 +4,12 @@ import { Button, Space } from "antd";
 
 interface IProps {
   onEditHandler: (id: string) => void
+  onOrderTimeHandler: (id: string)=>void
 }
 
-export const getColumns:({onEditHandler}:IProps)=>ProColumns<ICourse,'text'>[] =({
-  onEditHandler
+export const getColumns:({onEditHandler,onOrderTimeHandler}:IProps)=>ProColumns<ICourse,'text'>[] =({
+  onEditHandler,
+  onOrderTimeHandler
 })=> [
     {
     title: 'Course title',
@@ -24,7 +26,7 @@ export const getColumns:({onEditHandler}:IProps)=>ProColumns<ICourse,'text'>[] =
   {
     title: 'Duration',
     dataIndex: 'duration',
-    width: 75,
+    width: 175,
     search: false,
   },
   {
@@ -32,7 +34,8 @@ export const getColumns:({onEditHandler}:IProps)=>ProColumns<ICourse,'text'>[] =
     valueType: 'option',
     dataIndex: 'id',
     align: 'center',
-    render: (text,entity) => (
+    width:200,
+    render: (text,entity) => [
       <Space>
         <Button
           key="edit"
@@ -41,8 +44,15 @@ export const getColumns:({onEditHandler}:IProps)=>ProColumns<ICourse,'text'>[] =
         >
           Edit
           {text}
-        </Button>
+        </Button>,
+        <Button
+          key="orderTime"
+          type="link"
+          onClick={()=>onOrderTimeHandler(entity.id)}
+        >
+          Available Time
+        </Button>,
         </Space>
-    ),
+    ],
   },
 ]

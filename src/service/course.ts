@@ -1,7 +1,7 @@
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { DEFAULT_PAGE_SIZE } from "../utils/constants";
 import { COMMIT_COURSE, GET_COURSE, GET_COURSES } from "../graphql/course";
-import { TBaseCourse,  TCoursesQuery } from "../utils/types";
+import { TBaseCourse,  TCourseQuery,  TCoursesQuery } from "../utils/types";
 import { message } from "antd";
 
 export const useCourses = (
@@ -69,7 +69,27 @@ export const useEditInfo =():[handleEdit:Function,loading:boolean]=>{
   return [handleEdit,loading]
 }
 
-export const useCourse=()=>{
-  const [getCourse,{data,loading}] = useLazyQuery(GET_COURSE)
-  return {data,getCourse,loading}
+export const useCourse = () => {
+  const [get, { loading }] = useLazyQuery(GET_COURSE);
+
+  const getCourse = async (id: string) => {
+    const res = await get({
+      variables: {
+        id,
+      },
+    });
+
+    return res.data.getCourseInfo.data;
+  };
+
+  return { getCourse, loading };
+};
+
+export const useCourseInfo = (id:string) =>{
+  const {data,loading,refetch} = useQuery<TCourseQuery>(GET_COURSE,{
+    variables:{
+      id
+    }
+  })
+  return {data:data?.getCourseInfo.data,loading,refetch}
 }

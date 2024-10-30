@@ -31,13 +31,9 @@ const EditCourse = ({
     }
     useEffect(()=>{
         const init = async()=>{
-            if(id){
-            const res= await getCourse({
-            variables:{
-                id
-            }
-        })
-        form.setFieldsValue(res.data.getCourseInfo.data)
+            if(id&&open){
+            const res= await getCourse(id)
+            form.setFieldsValue(res)
         }else{
             form.resetFields()
         }

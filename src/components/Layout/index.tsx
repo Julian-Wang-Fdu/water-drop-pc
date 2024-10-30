@@ -5,7 +5,7 @@ import { useUserContext } from '../../hooks/userHook';
 import logo from '../../assets/logo.svg'
 import { AUTH_TOKEN } from '../../utils/constants';
 import { ROUTE_KEY, routes } from '../../routes/menus';
-import { useGoTo } from '../../hooks';
+import { useGoTo, useIsOrgRoute } from '../../hooks';
 import { Space, Tooltip } from 'antd';
 import { LogoutOutlined, ShopOutlined } from '@ant-design/icons';
 import OrgSelect from '../OrgSelect/OrgSelect';
@@ -22,6 +22,7 @@ const menuItemRender = (
 const Layout  = () => {
     const outlet = useOutlet()
     const {store} = useUserContext()
+    const isOrg = useIsOrgRoute()
     const nav = useNavigate()
     const { go } = useGoTo()
     const logout = ()=>{
@@ -57,7 +58,7 @@ const Layout  = () => {
                 routes: routes
             }}
             actionsRender={()=>[
-                <OrgSelect/>,
+                !isOrg&&<OrgSelect/>,
                 <Tooltip title = "Store manage">
                     <ShopOutlined onClick={goToOrg}/>
                 </Tooltip>
@@ -66,7 +67,9 @@ const Layout  = () => {
             //click the header will go back to home page
             onMenuHeaderClick={()=>nav('/')}
         >
-            {outlet}
+            <div key={store.currentOrg}>
+                {outlet}
+            </div>
         </ProLayout>
     );
 };
