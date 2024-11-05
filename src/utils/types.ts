@@ -70,3 +70,14 @@ export type TCourseQuery = { [key: string]: { __typename?: 'Query', data: ICours
 export type TOrgsQuery = { [key: string]: { __typename?: 'Query', data: IOrganization[], page: IPage } };
 
 export type TOrgQuery = { [key: string]: { __typename?: 'Query', data: IOrganization } };
+
+export interface ICard {
+  id: string;
+  name: string;
+  type: string;
+  time: number;
+  validityDay: number;
+  course?: ICourse;
+}
+
+export type TCardsQuery = { [key: string]: { __typename?: 'Query', data: ICard[], page: IPage } };

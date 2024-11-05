@@ -9,6 +9,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useRef, useState } from 'react';
 import EditCourse from './EditCourse';
 import OrderTime from './OrderTime';
+import ConsumeCard from './ConsumeCard';
 
 /**
 *
@@ -19,6 +20,8 @@ const Course = () => {
     const {data,refetch} = useCourses()
     const [showInfo,setShowInfo] = useState(false)
     const [showOrderTime,setShowOrderTime] = useState(false)
+    const [showCard,setShowCard] = useState(false)
+
     const onClickAddHandler = (id?:string)=>{
         if(id){
             setCurId(id)
@@ -37,11 +40,18 @@ const Course = () => {
         setCurId(id)
         setShowOrderTime(true)
     }
+
+    const onCardHandler=(id:string)=>{
+        setCurId(id);
+        setShowCard(true)
+    }
+
     return (
         <PageContainer header={{title: 'Available courses under current store'}}>
             <ProTable<ICourse> columns={getColumns({
                 onEditHandler: onClickAddHandler,
-                onOrderTimeHandler
+                onOrderTimeHandler,
+                onCardHandler
             }   
             )}
                 rowKey='id'
@@ -74,6 +84,7 @@ const Course = () => {
                 />
                 <EditCourse id={curId} open={showInfo} onClose={closeAndRefetchHandler}/>
                 {showOrderTime&&<OrderTime id={curId} onClose={()=>setShowOrderTime(false)}/>}
+                {showCard && <ConsumeCard id={curId} onClose={() => setShowCard(false)} />}    
         </PageContainer>
     );
 };

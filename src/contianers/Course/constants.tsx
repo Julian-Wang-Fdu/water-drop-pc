@@ -5,11 +5,13 @@ import { Button, Space } from "antd";
 interface IProps {
   onEditHandler: (id: string) => void
   onOrderTimeHandler: (id: string)=>void
+  onCardHandler:(id:string)=>void
 }
 
-export const getColumns:({onEditHandler,onOrderTimeHandler}:IProps)=>ProColumns<ICourse,'text'>[] =({
+export const getColumns:({onEditHandler,onOrderTimeHandler,onCardHandler}:IProps)=>ProColumns<ICourse,'text'>[] =({
   onEditHandler,
-  onOrderTimeHandler
+  onOrderTimeHandler,
+  onCardHandler
 })=> [
     {
     title: 'Course title',
@@ -34,7 +36,7 @@ export const getColumns:({onEditHandler,onOrderTimeHandler}:IProps)=>ProColumns<
     valueType: 'option',
     dataIndex: 'id',
     align: 'center',
-    width:200,
+    width:300,
     render: (text,entity) => [
       <Space>
         <Button
@@ -52,6 +54,13 @@ export const getColumns:({onEditHandler,onOrderTimeHandler}:IProps)=>ProColumns<
         >
           Available Time
         </Button>,
+        <Button
+          key="card"
+          type="link"
+          onClick={()=>onCardHandler(entity.id)}
+        >
+          Cards
+        </Button>
         </Space>
     ],
   },
