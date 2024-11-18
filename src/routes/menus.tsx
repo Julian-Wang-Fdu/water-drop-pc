@@ -42,7 +42,7 @@ export const ROUTE_CONFIG : Record<string, IRoute> = {
   },
   [ROUTE_KEY.PRODUCT]: {
     path: 'product',
-    name: '商品管理',
+    name: 'Product Manage',
     icon: <GiftOutlined />,
   },
   [ROUTE_KEY.NO_ORG]:{

@@ -96,6 +96,7 @@ export interface IProduct {
   stock: number;
   preferentialPrice: number;
   status: string;
+  cards: ICard[];
 }
 
 export interface IProductType {
@@ -110,3 +111,31 @@ export type TProductQuery = { [key: string]: { __typename?: 'Query', data: IProd
 export type TProductTypeQuery = { [key: string]: { __typename?: 'Query', data: IProductType[] } };
 
 export type TBaseProduct = Partial<IProduct>;
+
+export interface IStudent {
+  name: string;
+  id: string;
+  tel: string;
+  avatar: string;
+  account: string;
+}
+
+export type TStudentQuery = { [key: string]: { __typename?: 'Query', data: IStudent[], page: IPage } };
+
+export interface IScheduleRecord {
+  id: string;
+  status: string;
+  student: IStudent;
+}
+export interface ISchedule {
+  id: string;
+  schoolDay: string;
+  startTime: string;
+  endTime: string;
+  limitNumber: number; // 限制上课人数
+  course: ICourse;
+  org: IOrganization;
+  scheduleRecords: IScheduleRecord[];
+}
+
+export type TSchedulesQuery = { [key: string]: { __typename?: 'Query', data: ISchedule[] } };
