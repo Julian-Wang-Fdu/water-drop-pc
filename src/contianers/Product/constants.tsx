@@ -29,7 +29,7 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
     width: 50,
   },
   {
-    title: '封面',
+    title: 'Cover',
     dataIndex: 'coverUrl',
     search: false,
     align: 'center',
@@ -37,7 +37,7 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
     render: (_, record: IProduct) => <Image src={record.coverUrl} />,
   },
   {
-    title: '商品名',
+    title: 'Name',
     dataIndex: 'name',
     copyable: true,
     ellipsis: true,
@@ -45,53 +45,53 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
       rules: [
         {
           required: true,
-          message: '此项必填',
+          message: 'Product must have a name',
         },
       ],
     },
   },
   {
-    title: '原价',
+    title: 'Original Price',
     search: false,
     dataIndex: 'originalPrice',
-    width: 50,
+    width: 150,
   },
   {
-    title: '优惠价',
+    title: 'Preferential Price',
     search: false,
     dataIndex: 'preferentialPrice',
-    width: 80,
+    width: 150,
   },
   {
-    title: '库存总额',
+    title: 'Stock',
     search: false,
     width: 80,
     align: 'center',
     dataIndex: 'stock',
   },
   {
-    title: '当前库存',
+    title: 'Current Stock',
     search: false,
     width: 80,
     align: 'center',
     dataIndex: 'curStock',
   },
   {
-    title: '每人限购',
+    title: 'Personal purchase restriction',
     search: false,
-    width: 80,
+    width: 180,
     align: 'center',
     dataIndex: 'limitBuyNumber',
   },
   {
-    title: '销量',
+    title: 'Total sales',
     search: false,
     width: 50,
     align: 'center',
     dataIndex: 'buyNumber',
   },
   {
-    title: '操作',
+    title: 'Operation',
     valueType: 'option',
     dataIndex: 'id',
     align: 'center',
@@ -107,7 +107,7 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
               }}
               onClick={() => onStatusChangeHandler(entity.id, PRODUCT_STATUS.LIST)}
             >
-              上架
+              Publish
             </a>
           )
           : (
@@ -118,24 +118,24 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
               }}
               onClick={() => onStatusChangeHandler(entity.id, PRODUCT_STATUS.UN_LIST)}
             >
-              下架
+             Hit the shelf
             </a>
           )}
         <a
           key="edit"
           onClick={() => onEditHandler(entity.id)}
         >
-          编辑
+          Edit
         </a>
         <a
           key="card"
           onClick={() => onCardHandler(entity.id)}
         >
-          绑定消费卡
+          Bind card
         </a>
         <Popconfirm
-          title="提醒"
-          description="确认要删除吗？"
+          title="Remind"
+          description="Confirm delete?"
           onConfirm={() => onDeleteHandler(entity.id)}
         >
           <a
@@ -145,7 +145,7 @@ export const getColumns: (props: IProps) => ProColumns<IProduct, 'text'>[] = ({
               color: 'red',
             }}
           >
-            删除
+            Delete
           </a>
         </Popconfirm>
       </Space>

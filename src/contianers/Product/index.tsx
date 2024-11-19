@@ -7,6 +7,7 @@ import { DEFAULT_PAGE_SIZE } from "../../utils/constants";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import EditProduct from "./EditProduct";
+import ConsumeCard from "./ConsumeCard";
 
 /**
 * 当前门店下开设的课程
@@ -52,7 +53,7 @@ const Product = () => {
   };
 
   return (
-    <PageContainer header={{ title: '当前门店下的商品' }}>
+    <PageContainer header={{ title: 'Products in current store' }}>
       <ProTable<IProduct>
         rowKey="id"
         form={{
@@ -71,13 +72,13 @@ const Product = () => {
         }}
         toolBarRender={() => [
           <Button key="add" onClick={() => onClickAddHandler()} type="primary" icon={<PlusOutlined />}>
-            新建
+            Create new product
           </Button>,
         ]}
         request={refetch}
       />
       {showInfo && <EditProduct id={curId} onClose={closeAndRefetchHandler} />}
-      {/* {showCard && <ConsumeCard id={curId} onClose={() => setShowCard(false)} />} */}
+      {showCard && <ConsumeCard id={curId} onClose={() => setShowCard(false)} />} 
     </PageContainer>
   );
 };

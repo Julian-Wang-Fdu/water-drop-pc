@@ -93,3 +93,25 @@ export const useCourseInfo = (id:string) =>{
   })
   return {data:data?.getCourseInfo.data,loading,refetch}
 }
+
+export const useCoursesForSample = () => {
+  const [get, { data, loading }] = useLazyQuery<TCoursesQuery>(GET_COURSES);
+
+  const searchHandler = (name: string) => {
+    get({
+      variables: {
+        name,
+        page: {
+          pageNum: 1,
+          pageSize: DEFAULT_PAGE_SIZE,
+        },
+      },
+    });
+  };
+
+  return {
+    loading,
+    data: data?.getCourses.data,
+    search: searchHandler,
+  };
+};

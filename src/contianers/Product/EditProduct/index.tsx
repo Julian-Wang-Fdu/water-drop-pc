@@ -106,15 +106,15 @@ const EditCourse = ({
                 <InputNumber />
               </Form.Item>
             </Col>
-            <Col span={6}>
-              <Form.Item
+          </Row>
+          <Row>
+            <Form.Item
                 label="Personal purchase restriction"
                 name="limitBuyNumber"
                 rules={[{ required: true }]}
               >
                 <InputNumber />
               </Form.Item>
-            </Col>
           </Row>
           <Form.Item
             label="Description"
