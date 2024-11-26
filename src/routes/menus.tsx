@@ -27,7 +27,7 @@ export const ROUTE_CONFIG : Record<string, IRoute> = {
   [ROUTE_KEY.MY]: {
     path: 'my',
     name: 'Personal Information',
-    hideInMenu: true,
+    //hideInMenu: true,
     icon: <UserOutlined />,
   },
   [ROUTE_KEY.ORG]:{
