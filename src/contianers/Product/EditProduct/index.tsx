@@ -44,9 +44,9 @@ const EditCourse = ({
       afterOpenChange={(o) => !o && onClose()}
       extra={(
         <Space>
-          <Button onClick={() => onClose()}>取消</Button>
+          <Button onClick={() => onClose()}>Cancel</Button>
           <Button loading={editLoading} onClick={onSubmitHandler} type="primary">
-            提交
+            Submit
           </Button>
         </Space>
       )}
